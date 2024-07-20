@@ -1,5 +1,8 @@
+// src/signup-login/Signup.jsx
 import React, { useState } from 'react';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../Firebase';
 
 const Signup = () => {
   const [formValues, setFormValues] = useState({
@@ -9,6 +12,7 @@ const Signup = () => {
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +34,18 @@ const Signup = () => {
     return Object.values(tempErrors).every(x => x === "");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log('Form submitted:', formValues);
-      // Perform signup logic here
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, formValues.email, formValues.password);
+        console.log('User registered:', userCredential.user);
+        setSuccessMessage('User registered successfully!');
+        // Optionally, you can store the username in the user's profile or database
+      } catch (error) {
+        console.error('Error registering user:', error);
+        setErrors({ ...errors, form: error.message });
+      }
     }
   };
 
@@ -52,6 +63,8 @@ const Signup = () => {
           Sign Up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {errors.form && <Typography color="error">{errors.form}</Typography>}
+          {successMessage && <Typography color="primary">{successMessage}</Typography>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -125,4 +138,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
