@@ -1,7 +1,10 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 
 export const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <>
+      <Typography variant='h1' align='center'>Dashboard Here</Typography>
+    </>
   )
 }
