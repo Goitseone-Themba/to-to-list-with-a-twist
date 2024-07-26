@@ -1,16 +1,13 @@
-import React from 'react';
-import Signup from './signup-login/Signup';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { useState } from 'react'
+import { Dashboard } from './pages/Dashboard'
 
-const theme = createTheme();
+function App() {
 
-const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Signup />
-    </ThemeProvider>
-  );
-};
+    <>
+      <Dashboard />
+    </>
+  )
+}
 
-export default App;
+export default App
