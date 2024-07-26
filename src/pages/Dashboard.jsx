@@ -3,12 +3,22 @@ import './Dashboard.css';
 import WeatherWidget from '../components/WeatherWidget'; 
 import AddTaskForm from '../components/AddTaskForm';
 import ImportantTasks from '../components/ImportantTasks';
+import AssignedTasks from '../components/AssignedTasks';
+import PrioritySettings from '../components/PrioritySettings';
+import Analytics from '../components/Analytics';
 
 export const Dashboard = () => {
   // Mock data
   const userName = "John Doe"; 
   const earnedPoints = 120; 
   const plannerStatus = "Intermediate Planner"; 
+
+  // State for tasks
+  const [tasks, setTasks] = useState([
+    { name: "Task 1", priority: "low" },
+    { name: "Task 2", priority: "medium" },
+    { name: "Task 3", priority: "high" }
+  ]);
 
   // State for active service in the center column
   const [activeService, setActiveService] = useState(null);
@@ -43,6 +53,9 @@ export const Dashboard = () => {
     return () => clearInterval(timer);
   }, [isRunning]);
 
+  // Filter important tasks based on priority
+  const importantTasks = tasks.filter(task => task.priority === 'high');
+
   return (
     <div className="dashboard">
       <header className="header">
@@ -74,7 +87,10 @@ export const Dashboard = () => {
           <WeatherWidget />
           <div className="main-container">
             {activeService === 'AddTask' && <AddTaskForm />}
-            {activeService === 'ImportantTasks' && <ImportantTasks />}
+            {activeService === 'ImportantTasks' && <ImportantTasks tasks={importantTasks} />}
+            {activeService === 'AssignedTasks' && <AssignedTasks />}
+            {activeService === 'PrioritySettings' && <PrioritySettings tasks={tasks} setTasks={setTasks} />}
+            {activeService === 'Analytics' && <Analytics tasks={tasks} />}
             {/* Render other components conditionally based on activeService */}
           </div>
         </div>
@@ -109,6 +125,7 @@ export const Dashboard = () => {
 };
 
 export default Dashboard;
+
 
 
 

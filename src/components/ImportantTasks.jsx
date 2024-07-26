@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ImportantTasks.css';
 
-const ImportantTasks = () => {
+export const ImportantTasks = () => {
   // Mock important tasks data
   const [tasks, setTasks] = useState([
     { id: 1, task: "Complete React project", dueDate: "2024-08-01" },
