@@ -1,3 +1,4 @@
+
 import React from "react";
 import Signup from "./signup-login/Signup";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
@@ -11,13 +12,12 @@ import {
   Navigate,
 } from "react-router-dom";
 
-function App() {
-
-  return (
-    <>
-      <Dashboard />
-    </>
-  )
-}
-
-export default App
+  const App = () => {
+    return (
+      <div className="App">
+        <Dashboard />
+      </div>
+    );
+  };
+  
+  export default App;
