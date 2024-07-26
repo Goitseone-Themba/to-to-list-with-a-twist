@@ -1,23 +1,29 @@
+import { BrowserRouter as Router, Route, Routes, Navigate, } from "react-router-dom"
+import { AuthProvider } from "./context/AuthContext"
+import { ProtectedRoute } from "./context/ProtectedRoute"
+import { Login } from "./signup-login/Login"
+import { Signup } from "./signup-login/Signup"
+import { Dashboard } from "./pages/Dashboard"
+import { LandingPage } from "./pages/LandingPage"
 
-import React from "react";
-import Signup from "./signup-login/Signup";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { useState } from "react";
-import { Dashboard } from "./pages/Dashboard";
-import { AuthProvider } from "./context/AuthContext";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+export const App = () => {
+  return (
+    <>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="landing" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
-  const App = () => {
-    return (
-      <div className="App">
-        <Dashboard />
-      </div>
-    );
-  };
-  
-  export default App;
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </>
+  )
+}
