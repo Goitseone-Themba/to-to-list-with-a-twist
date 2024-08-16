@@ -1,10 +1,9 @@
-// src/signup-login/Signup.jsx
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../Firebase';
+import { AuthContext } from '../context/AuthContext';
 
-const Signup = () => {
+export const Signup = () => {
+  const { signup, user } = useContext(AuthContext)
   const [formValues, setFormValues] = useState({
     username: '',
     email: '',
@@ -36,10 +35,10 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (validate()) {
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, formValues.email, formValues.password);
-        console.log('User registered:', userCredential.user);
+        await signup(formValues.email, formValues.password).then
         setSuccessMessage('User registered successfully!');
         // Optionally, you can store the username in the user's profile or database
       } catch (error) {
@@ -60,7 +59,7 @@ const Signup = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign Up 
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           {errors.form && <Typography color="error">{errors.form}</Typography>}
@@ -136,5 +135,3 @@ const Signup = () => {
     </Container>
   );
 };
-
-export default Signup;

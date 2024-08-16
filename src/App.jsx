@@ -1,16 +1,30 @@
-import React from 'react';
-import Signup from './signup-login/Signup';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes, Navigate, } from "react-router-dom"
+import { AuthProvider } from "./context/AuthContext"
+import { ProtectedRoute } from "./context/ProtectedRoute"
+import { Login } from "./signup-login/Login"
+import { Signup } from "./signup-login/Signup"
+import { Dashboard } from "./pages/Dashboard"
+import { LandingPage } from "./pages/LandingPage"
 
-const theme = createTheme();
-
-const App = () => {
+export const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Signup />
-    </ThemeProvider>
-  );
-};
+    <>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="landing" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
-export default App;
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </>
+  )
+}
+
