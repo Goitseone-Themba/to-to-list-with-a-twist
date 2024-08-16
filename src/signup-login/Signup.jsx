@@ -1,11 +1,9 @@
-// src/signup-login/Signup.jsx
 import React, { useContext, useState } from 'react';
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
 import { AuthContext } from '../context/AuthContext';
 
 export const Signup = () => {
   const { signup, user } = useContext(AuthContext)
-
   const [formValues, setFormValues] = useState({
     username: '',
     email: '',
@@ -137,4 +135,3 @@ export const Signup = () => {
     </Container>
   );
 };
-
